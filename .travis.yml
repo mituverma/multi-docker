@@ -1,0 +1,26 @@
+sudo: required
+services:
+  - docker
+  
+before_install:
+  - docker build -t mituverma/react-test -f ./client/Dockerfile.dev ./client
+  
+script:
+  - docker run mituverma/react-test npm test -- --coverage
+  
+after_success:
+  - docker build -t mituverma/multi-client ./client
+  - docker build -t mituverma/multi-nginx ./nginx
+  - docker build -t mituverma/multi-server ./server
+  - docker build -t mituverma/multi-worker ./worker
+  
+## login to docker CLI
+  - echo "$DOCKER_PASSORD" | docker login -u "$DOCKER_ID" --password-stdin
+  
+  
+## push the images to github
+  - docker push mituverma/multi-client
+  - docker push mituverma/multi-nginx
+  - docker push mituverma/multi-server
+  - docker push mituverma/multi-worker
+
