@@ -15,7 +15,7 @@ after_success:
   - docker build -t mituverma/multi-worker ./worker
   
 ## login to docker CLI
-  - echo "$DOCKER_PASSORD" | winpty docker login -u "$DOCKER_ID" --password-stdin
+  - docker login -u $DOCKER_ID -p $DOCKER_PASSWORD
   
   
 ## push the images to github
