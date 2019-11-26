@@ -1,0 +1,37 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+	  "name": "client",
+	  "image":"mituverma/multi-client",
+	  "hostname": "client",
+	  "essential": false
+	},
+	{
+	  "name": "server",
+	  "image":"mituverma/multi-server",
+	  "hostname": "api",
+	  "essential": false
+	},
+	{
+	  "name": "worker",
+	  "image":"mituverma/multi-worker",
+	  "hostname": "worker",
+	  "essential": false
+	},
+	{
+	  "name": "nginx",
+	  "image": "mituverma/multi-nginx",
+	  "hostname": "nginx",
+	  "essential": true,
+	  "portMappings": [
+	    {
+	      "hostPort":80,
+		  "containerPort":80
+	    }
+	   ],
+	   "links": ["client", "server"]
+	}
+	
+  ]
+}
